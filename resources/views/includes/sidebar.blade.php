@@ -3,7 +3,7 @@
     <!-- Sidebar scroll-->
     <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
-            <a href="index.html" class="text-nowrap logo-img d-flex gap-2 justify-content-center align-items-end">
+            <a href="/" class="text-nowrap logo-img d-flex gap-2 justify-content-center align-items-end">
                 <img src="{{asset('dashboard_assets/dist/images/logo/election.png')}}" class="dark-logo" width="30"
                     alt="" />
                 <img src="{{asset('dashboard_assets/dist/images/logo/election.png')}}" class="light-logo" width="30"

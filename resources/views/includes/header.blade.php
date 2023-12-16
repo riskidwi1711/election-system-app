@@ -6,16 +6,16 @@
           <i class="ti ti-menu-2"></i>
         </a>
       </li>
-      <li class="nav-item d-none d-lg-block">
+      {{-- <li class="nav-item d-none d-lg-block">
         <a class="nav-link nav-icon-hover" href="javascript:void(0)" data-bs-toggle="modal"
           data-bs-target="#exampleModal">
           <i class="ti ti-search"></i>
         </a>
-      </li>
+      </li> --}}
     </ul>
     <ul class="navbar-nav quick-links d-none d-lg-flex">
       <li class="nav-item dropdown-hover d-none d-lg-block">
-        <a class="nav-link" href="app-calendar.html">Calendar</a>
+        <a class="nav-link" href="/">Halo, {{Auth::user()->name}}</a>
       </li>
     </ul>
     <div class="d-flex gap-3 justify-content-center align-items-center d-lg-none">
