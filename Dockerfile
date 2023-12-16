@@ -15,7 +15,7 @@ COPY ./laravel.conf /etc/apache2/sites-available/000-default.conf
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Set the working directory
-WORKDIR /var/www/html/voting-app
+WORKDIR /var/www/html
 
 # Copy the Laravel application files
 COPY . .
