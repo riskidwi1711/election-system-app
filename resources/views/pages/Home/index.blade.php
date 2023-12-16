@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 @section('pages')
-@include('pages.home.components.slider')
+@include('pages.Home.components.slider')
 <!--  Row 1 -->
 <div class="row">
     <div class="col-lg-8 d-flex align-items-strech">
