@@ -31,8 +31,6 @@ RUN php artisan key:generate
 # Set permissions
 RUN chown -R www-data:www-data storage bootstrap/cache
 
-# migrate
-RUN php artisan migrate
 # Expose port 80
 EXPOSE 80
 
