@@ -63,17 +63,26 @@
                             id="open" placeholder="Masukan id telgram saksi">
                     </div>
                 </div>
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label for="open" class="control-label col-form-label">No Induk Kependudukan</label>
+                        <input name="nik" type="text" class="form-control" id="open"
+                            placeholder="Masukan No Induk Kependudukan saksi">
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-sm-12 col-md-6">
                     <div class="mb-3">
                         <label class="control-label col-form-label">Pilih Kecamatan</label>
-                        <select name="kecamatan" class="form-select">
+                        <select id="input-kecamatan" name="kecamatan_id" class="form-select">
+                            <option>Pilih kecamatan</option>
                             @foreach ($kecamatan as $item)
-                            @if ($item == $saksi->kecamatan)
-                            <option selected value="{{$item}}">{{$item}}</option>
+                            @if ($item->id == $saksi->kecamatan_id)
+                            <option selected value="{{$item->id}}">{{$item->nama}}</option>
+                            @else
+                            <option value="{{$item->id}}">{{$item->nama}}</option>
                             @endif
-                            <option value="{{$item}}">{{$item}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -81,13 +90,8 @@
                 <div class="col-sm-12 col-md-6">
                     <div class="mb-3">
                         <label class="control-label col-form-label">Pilih Kelurahan</label>
-                        <select name="kelurahan" class="form-select">
-                            @foreach ($kelurahan as $item)
-                            @if ($item == $saksi->kelurahan)
-                            <option selected value="{{$item}}">{{$item}}</option>
-                            @endif
-                            <option value="{{$item}}">{{$item}}</option>
-                            @endforeach
+                        <select id="input-kelurahan" name="kelurahan_id" class="form-select">
+                            <option value="{{$saksi->kelurahan_id}}">{{$saksi->kelurahan->nama}}</option>
                         </select>
                     </div>
                 </div>
@@ -124,4 +128,18 @@
     </form>
 </div>
 {{-- end saksi form --}}
+@pushOnce('scripts')
+<script>
+    $('#input-kecamatan').on('change', function() {
+            fetch('/api/v1/admin/get_kelurahan/' + this.value).then(response => response.json()).then(data => {
+                console.log(this.value)
+                const select = document.getElementById("input-kelurahan");
+                select.innerHTML = '';
+                data.forEach((kelurahan) => {
+                    select.appendChild(new Option(kelurahan.nama, kelurahan.id));
+                })
+            });
+        }); 
+</script>
+@endPushOnce
 @endsection

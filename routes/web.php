@@ -4,6 +4,8 @@ use App\Http\Controllers\Auth\LoginRegisterController;
 use App\Http\Controllers\Dashboard\CapresController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\HasilSuaraController;
+use App\Http\Controllers\Dashboard\KecamatanController;
+use App\Http\Controllers\Dashboard\KeluarahanController;
 use App\Http\Controllers\Dashboard\SaksiController;
 use Illuminate\Support\Facades\Route;
 
@@ -56,6 +58,26 @@ Route::prefix('/dashboard')->middleware(['auth'])->group(function () {
     Route::prefix('hasil_suara')->group(function () {
         Route::controller(HasilSuaraController::class)->group(function () {
             Route::get('/', 'index')->name('suara');
+        });
+    });
+    Route::prefix('kecamatan')->group(function () {
+        Route::controller(KecamatanController::class)->group(function () {
+            Route::get('/', 'index')->name('kecamatan');
+            Route::get('/tambah_kecamatan', 'create')->name('kecamatan.create');
+            Route::post('/simpan_kecamatan', 'store')->name('kecamatan.simpan');
+            Route::get('/edit_kecamatan/{id}', 'edit')->name('kecamatan.edit');
+            Route::post('/update_kecamatan', 'update')->name('kecamatan.update');
+            Route::get('/delete_kecamatan/{id}', 'destroy')->name('kecamatan.delete');
+        });
+    });
+    Route::prefix('kelurahan')->group(function () {
+        Route::controller(KeluarahanController::class)->group(function () {
+            Route::get('/', 'index')->name('kelurahan');
+            Route::get('/tambah_kecamatan', 'create')->name('kelurahan.create');
+            Route::post('/simpan_kecamatan', 'store')->name('kelurahan.simpan');
+            Route::get('/edit_kecamatan/{id}', 'edit')->name('kelurahan.edit');
+            Route::post('/update_kecamatan', 'update')->name('kelurahan.update');
+            Route::get('/delete_kecamatan/{id}', 'destroy')->name('kelurahan.delete');
         });
     });
 });

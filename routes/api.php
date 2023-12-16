@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Dashboard\HasilSuaraController;
 use App\Models\CalonPresiden;
+use App\Models\Kelurahan;
 use App\Models\Saksi;
 use App\Models\Suara;
 use Illuminate\Http\Request;
@@ -94,6 +95,12 @@ Route::prefix('v1')->group(function () {
             }
 
             return response()->json($response);
+        });
+    });
+    Route::prefix('admin')->group(function(){
+        Route::get('/get_kelurahan/{id}', function($id){
+            $kelurahan = Kelurahan::where('kecamatan_id',$id)->get();
+            return response()->json($kelurahan);
         });
     });
 });

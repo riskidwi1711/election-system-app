@@ -64,7 +64,7 @@
                         <div class="row alig n-items-start">
                             <div class="col-8">
                                 <h5 class="card-title mb-9 fw-semibold">Total Suara Sah </h5>
-                                <h4 class="fw-semibold mb-3">{{$count_suara_sah}}</h4>
+                                <h4 class="fw-semibold mb-3">{{$count_suara_sah}} Suara</h4>
                             </div>
                             <div class="col-4">
                                 <div class="d-flex justify-content-end">

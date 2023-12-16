@@ -28,5 +28,20 @@ return $sidebar = [
             'url' => 'suara',
             'permission' => 'hasil_suara.view',
         ],
+    ],
+    'Data Wilayah' => [
+        
+        [
+            'title' => 'Kecamatan',
+            'icon' => 'ti ti-map',
+            'url' => 'kecamatan',
+            'permission' => 'kecamatan.view',
+        ],
+        [
+            'title' => 'Kelurahan',
+            'icon' => 'ti ti-map',
+            'url' => 'kelurahan',
+            'permission' => 'keluarahn.view',
+        ]
     ]
 ];

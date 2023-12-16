@@ -6,11 +6,11 @@
     <div class="card-body px-4 py-3">
         <div class="row align-items-center">
             <div class="col-9">
-                <h4 class="fw-semibold mb-8">List Data Saksi</h4>
+                <h4 class="fw-semibold mb-8">List {{$title}}</h4>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a class="text-muted " href="index.html">Dashboard</a></li>
-                        <li class="breadcrumb-item" aria-current="page">Data Saksi</li>
+                        <li class="breadcrumb-item" aria-current="page">{{$title}}</li>
                     </ol>
                 </nav>
             </div>
@@ -35,45 +35,36 @@
                     <div class="mb-2 d-flex justify-content-between align-items-center">
                         <div>
                             <div class="mb-2">
-                                <h5 class="mb-0">Data Saksi</h5>
+                                <h5 class="mb-0">{{$title}}</h5>
                             </div>
                             <p class="card-subtitle mb-3">
-                                Seluruh saksi yang telah di tambahkan ke dalam aplikasi.
+                                Seluruh {{$title}} yang telah di tambahkan ke dalam aplikasi.
                             </p>
                         </div>
                         <div>
-                            <a href="{{route('saksi.create')}}" class="btn btn-primary"><i
-                                    class="fas fa-plus me-2"></i>Tambah Saksi</a>
+                            <a href="{{route($prefix.'.create')}}" class="btn btn-primary"><i
+                                    class="fas fa-plus me-2"></i>Tambah {{$title}}</a>
                         </div>
                     </div>
                     <div class="table-responsive">
                         <table id="zero_config" class="table border table-striped table-bordered text-nowrap">
                             <thead>
                                 <tr>
-                                    <th>Nama</th>
-                                    <th>Kelurahan</th>
-                                    <th>Kecamatan</th>
-                                    <th>TPS</th>
-                                    <th>Id Telegram</th>
-                                    <th>NIK</th>
-                                    <th>Opsi</th>
+                                    @foreach ($table_coloumn as $item)
+                                    <th>{{$item}}</th>
+                                    @endforeach
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($saksi_data as $item)
+                                @foreach ($table as $item)
                                 <tr>
                                     <td>{{$item['nama']}}</td>
-                                    <td>{{$item->kelurahan->nama}}</td>
-                                    <td>{{$item->kecamatan->nama}}</td>
-                                    <td>{{$item['tps']}}</td>
-                                    <td>{{$item['id_telegram']}}</td>
-                                    <td>{{$item['nik']}}</td>
+                                    <td>{{$item['slug']}}</td>
                                     <td>
                                         <div class="d-flex gap-2">
-                                            <a href="{{route('saksi.edit', $item['id'])}}"
+                                            <a href="{{route($prefix.'.edit', $item['id'])}}"
                                                 class="btn btn-sm btn-info"><i class="fas fa-edit"></i></a>
-                                            <a href="{{route('saksi.delete', $item['id'])}}"
-                                                class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+                                            <a href="{{route($prefix.'.delete', $item['id'])}}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
                                         </div>
                                     </td>
                                 </tr>
@@ -81,14 +72,9 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>Nama</th>
-                                    <th>Kelurahan</th>
-                                    <th>Kecamatan</th>
-                                    <th>TPS</th>
-                                    <th>Id Telegram</th>
-                                    <th>Tgl Mendaftar</th>
-                                    <th>Opsi</th>
-                                </tr>
+                                    @foreach ($table_coloumn as $item)
+                                    <th>{{$item}}</th>
+                                    @endforeach
                             </tfoot>
                         </table>
                     </div>
