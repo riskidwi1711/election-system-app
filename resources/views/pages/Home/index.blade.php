@@ -15,6 +15,7 @@
                         <form class="d-flex gap-2 justify-content-center align-items-center"
                             action={{route('dashboard')}} method="GET">
                             <select name="kelurahan" class="form-select">
+                                <option selected>Pilih kelurahan</option>
                                 @foreach ($kelurahan as $item)
                                 <option value="{{$item->id}}">{{$item->nama}}</option>
                                 @endforeach

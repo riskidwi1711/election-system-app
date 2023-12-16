@@ -44,6 +44,7 @@ class DashboardController extends Controller
 
         // Group by 'calon_presiden_id' as before
         $query->groupBy('calon_presiden_id');
+        $query->orderByDesc('total_suara_sah');
 
         // Retrieve the data
         $suaraSahByCalonPresiden = $query->get();
