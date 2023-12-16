@@ -15,7 +15,7 @@ class KeluarahanController extends Controller
     public function __construct()
     {
         $this->model = new Kelurahan();
-        $this->route_prefix = 'kelurahan';
+        $this->route_prefix = 'Kelurahan';
     }
 
     public function index()
