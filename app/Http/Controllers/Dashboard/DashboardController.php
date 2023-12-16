@@ -100,7 +100,7 @@ class DashboardController extends Controller
             "pie_data" => $pieData,
             "calon_names"=> $calonName
         ];
-        return view('pages.home.index', $data);
+        return view('pages.Home.index', $data);
     }
 
     public function chartConfig()

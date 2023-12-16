@@ -14,7 +14,7 @@ class CapresController extends Controller
     public function __construct()
     {
         $this->model = new CalonPresiden();
-        $this->route_prefix = 'capres';
+        $this->route_prefix = 'Capres';
     }
 
     public function index()

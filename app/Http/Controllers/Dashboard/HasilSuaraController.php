@@ -16,7 +16,7 @@ class HasilSuaraController extends Controller
     public function __construct()
     {
         $this->model = new Suara();
-        $this->route_prefix = 'suara';
+        $this->route_prefix = 'Suara';
     }
 
     public function index()

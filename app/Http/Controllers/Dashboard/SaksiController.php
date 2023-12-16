@@ -21,7 +21,7 @@ class SaksiController extends Controller
             'saksi_data' => $this->model->orderBy('created_at', 'desc')->get()
         ];
 
-        return view('pages.saksi.index', $data);
+        return view('pages.Saksi.index', $data);
     }
 
     public function create()
@@ -32,7 +32,7 @@ class SaksiController extends Controller
             'tps' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         ];
 
-        return view('pages.saksi.create', $data);
+        return view('pages.Saksi.create', $data);
     }
 
     public function edit($saksi_id)
@@ -44,7 +44,7 @@ class SaksiController extends Controller
             'tps' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         ];
 
-        return view('pages.saksi.edit', $data);
+        return view('pages.Saksi.edit', $data);
     }
 
     public function store(Request $request)
