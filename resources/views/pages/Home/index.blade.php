@@ -11,6 +11,17 @@
                         <h5 class="card-title fw-semibold">Total Perolehan Suara</h5>
                         <p class="card-subtitle mb-0">Total suara masuk per calon berdasarkan jenis suara</p>
                     </div>
+                    <div>
+                        <form class="d-flex gap-2 justify-content-center align-items-center"
+                            action={{route('dashboard')}} method="GET">
+                            <select name="kelurahan" class="form-select">
+                                @foreach ($kelurahan as $item)
+                                <option value="{{$item->id}}">{{$item->nama}}</option>
+                                @endforeach
+                            </select>
+                            <button type="submit" class="btn btn-primary">Filter</button>
+                        </form>
+                    </div>
                 </div>
                 <div class="row align-items-center">
                     <div class="col-lg-12 col-md-12">
@@ -63,20 +74,21 @@
                     <div class="card-body">
                         <div class="row alig n-items-start">
                             <div class="col-8">
-                                <h5 class="card-title mb-9 fw-semibold">Total Suara Sah </h5>
-                                <h4 class="fw-semibold mb-3">{{$count_suara_sah}} Suara</h4>
+                                <h6 class="card-title mb-1 fw-semibold">Paslon Suara Tertinggi </h6>
+                                <h5 class="card-title mb-9 fw-semibold">{{$suara_sah_tertinggi['nama_calon_presiden']}}
+                                    - {{$suara_sah_tertinggi['nama_wakil_presiden']}} </h5>
+                                <h4 class="fw-semibold mb-3">{{$suara_sah_tertinggi['total_suara_sah']}} Suara</h4>
                             </div>
                             <div class="col-4">
                                 <div class="d-flex justify-content-end">
                                     <div
-                                        class="text-white bg-secondary rounded-circle p-6 d-flex align-items-center justify-content-center">
-                                        <i class="ti ti-brand-telegram fs-6"></i>
+                                        class="text-white bg-success rounded-circle p-6 d-flex align-items-center justify-content-center">
+                                        <i class="ti ti-badges-filled fs-6"></i>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div id="earning"></div>
                 </div>
             </div>
         </div>
@@ -148,14 +160,7 @@
                         <h5 class="card-title fw-semibold">Peringkat Sementara</h5>
                         <p class="card-subtitle mb-0">Peringkat sementara perolehan suara</p>
                     </div>
-                    <div>
-                        {{-- <select class="form-select">
-                            <option value="1">March 2023</option>
-                            <option value="2">April 2023</option>
-                            <option value="3">May 2023</option>
-                            <option value="4">June 2023</option>
-                        </select> --}}
-                    </div>
+
                 </div>
                 <div class="table-responsive">
                     <table class="table align-middle text-nowrap mb-0">
@@ -171,7 +176,8 @@
                                 <td class="ps-0">
                                     <div class="d-flex align-items-center">
                                         <div>
-                                            <h6 class="fw-semibold mb-1">{{$item->nama_calon_presiden}}</h6>
+                                            <h6 class="fw-semibold mb-1">{{$item->nama_calon_presiden}} -
+                                                {{$item->nama_wakil_presiden}}</h6>
                                         </div>
                                     </div>
                                 </td>
