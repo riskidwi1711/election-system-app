@@ -88,7 +88,6 @@ class DashboardController extends Controller
             $suara_sah += $suara->suara_sah;
             $suara_tidak_sah += $suara->suara_tidak_sah;
         }
-        
 
         $data = [
             "count_saksi" => Saksi::all()->count(),
