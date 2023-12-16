@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return response()->json('Welcome to voting app v.0.0.1');
+    return redirect(route('dashboard'));
 });
 
 Route::controller(LoginRegisterController::class)->group(function () {
