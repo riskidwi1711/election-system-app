@@ -23,9 +23,15 @@ return $sidebar = [
             'permission' => 'saksi.view',
         ],
         [
-            'title' => 'Suara',
+            'title' => 'Suara Calon',
             'icon' => 'ti ti-file-database',
             'url' => 'suara',
+            'permission' => 'hasil_suara.view',
+        ],
+        [
+            'title' => 'Suara Masuk',
+            'icon' => 'ti ti-file-database',
+            'url' => 'suara_masuk',
             'permission' => 'hasil_suara.view',
         ],
     ],

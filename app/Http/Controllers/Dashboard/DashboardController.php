@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CalonPresiden;
 use App\Models\Saksi;
 use App\Models\Suara;
+use App\Models\SuaraMasuk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -14,72 +15,27 @@ class DashboardController extends Controller
     public function index()
     {
 
-        $all_suara = Suara::all();
+        $all_suara = SuaraMasuk::all();
         $suara_sisa = 0;
         $suara_sah = 0;
         $suara_tidak_sah = 0;
         $total_suara = 0;
-        $all_calon_presiden = CalonPresiden::all();
-
-        // Inisialisasi array untuk menyimpan data suara
-        $suara_data = [];
         $chartData = [];
         $pieData = [];
         $calonName = [];
 
-        // Loop melalui setiap calon presiden
-        foreach ($all_calon_presiden as $calon) {
-            // Ambil total suara berdasarkan calon_presiden_id
-            $calonName[] = $calon->nama_calon_presiden;
-            $suara = Suara::select(
-                'calon_presiden.nama_calon_presiden', 
-                'calon_presiden.nama_wakil_presiden',// Sesuaikan dengan nama kolom yang benar
-                DB::raw('SUM(suara_sah) as suara_sah_total'),
-                DB::raw('SUM(suara_tidak_sah) as suara_tidak_sah_total'),
-                DB::raw('SUM(suara_sisa) as suara_sisa_total')
-            )
-                ->join('calon_presiden', 'suara.calon_presiden_id', '=', 'calon_presiden.id') // Sesuaikan dengan nama tabel yang benar
-                ->where('suara.calon_presiden_id', $calon->id)
-                ->groupBy('calon_presiden.nama_calon_presiden', 'suara.calon_presiden_id') // Sesuaikan dengan nama kolom yang benar
-                ->first();
-            
-            if ($suara) {
-                $chartData[] =
-                    [
-                        'name' => $suara->nama_calon_presiden . ' - '. $suara->nama_wakil_presiden,
-                        'data' => [
-                            intval($suara->suara_sah_total),
-                            intval($suara->suara_tidak_sah_total),
-                            intval($suara->suara_sisa_total),
-                        ],
-                    ];
-                $pieData[] =  intval($suara->suara_sah_total) + intval($suara->suara_tidak_sah_total) +  intval($suara->suara_sisa_total);
-            }
+        $suaraSahByCalonPresiden = Suara::select('calon_presiden_id', 'calon_presiden.nama_calon_presiden', 'calon_presiden.nama_wakil_presiden', DB::raw('SUM(suara_sah) as total_suara_sah'))
+            ->join('calon_presiden', 'suara.calon_presiden_id', 'calon_presiden.id')
+            ->groupBy('calon_presiden_id')
+            ->get();
 
-            // Jika tidak ada data, set nilai 0
-            if (!$suara) {
-                $suara = (object)[
-                    'calon_presiden_id' => $calon->nama_calon_presiden,
-                    'suara_sah_total' => 0,
-                    'suara_tidak_sah_total' => 0,
-                    'suara_sisa_total' => 0,
-
-                ];
-
-                $chartData[] =
-                    [
-                        'name' => $calon->nama_calon_presiden .' - '. $calon->nama_wakil_presiden,
-                        'data' => [
-                            0,
-                            0,
-                            0,
-                        ],
-                    ];
-                $pieData[] = 0;
-            }
-
-            // Tambahkan data suara ke dalam array
-            $suara_data[] = $suara;
+        foreach ($suaraSahByCalonPresiden as $result) {
+            $suara_sah_total[] = intval($result['total_suara_sah']);
+            $calonName[] = $result['nama_calon_presiden'] . '-' . $result['nama_wakil_presiden'];
+            $chartData = [
+                'name' => 'Suara sah',
+                'data' => $suara_sah_total
+            ];
         }
 
         foreach ($all_suara as $suara) {
@@ -98,7 +54,8 @@ class DashboardController extends Controller
             "count_suara_sisa" => $suara_sisa,
             "chart_data" => $chartData,
             "pie_data" => $pieData,
-            "calon_names"=> $calonName
+            "calon_names" => $calonName,
+            "table_data" => $suaraSahByCalonPresiden
         ];
         return view('pages.Home.index', $data);
     }

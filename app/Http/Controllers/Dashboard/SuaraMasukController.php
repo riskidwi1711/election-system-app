@@ -4,27 +4,26 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Saksi;
-use App\Models\Suara;
+use App\Models\SuaraMasuk;
 use Exception;
 use Illuminate\Http\Request;
 
-class HasilSuaraController extends Controller
+class SuaraMasukController extends Controller
 {
     private $model;
     private $route_prefix;
 
     public function __construct()
     {
-        $this->model = new Suara();
-        $this->route_prefix = 'Suara';
+        $this->model = new SuaraMasuk();
+        $this->route_prefix = 'SuaraMasuk';
     }
 
     public function index()
     {
         $data = [
-            'model_data' => $this->model->with('saksi', 'calonPresiden')->orderBy('created_at', 'desc')->get()
+            'model_data' => $this->model->with('saksi')->orderBy('created_at', 'desc')->get()
         ];
-        
 
         return view('pages.' . $this->route_prefix . '.index', $data);
     }

@@ -5,8 +5,10 @@ use App\Models\CalonPresiden;
 use App\Models\Kelurahan;
 use App\Models\Saksi;
 use App\Models\Suara;
+use App\Models\SuaraMasuk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Validation\Rules\Can;
 
 /*
 |--------------------------------------------------------------------------
@@ -96,10 +98,74 @@ Route::prefix('v1')->group(function () {
 
             return response()->json($response);
         });
+        Route::post('konfirmasi_suara', function (Request $request) {
+            $response = [
+                "response_code" => "00",
+                "response_msg" => "success"
+            ];
+            try {
+                $username =  $request->username;
+                $valid = Saksi::where('id_telegram', $username)->first();
+                if (!$valid) {
+                    throw new Exception('Saksi tidak terdaftar.');
+                }
+
+                $calon_1 = CalonPresiden::where('no_urut', 1)->first();
+                $calon_2 = CalonPresiden::where('no_urut', 2)->first();
+                $calon_3 = CalonPresiden::where('no_urut', 3)->first();
+                $suara_calon[] = $request->suara_calon_1;
+                $suara_calon[] = $request->suara_calon_2;
+                $suara_calon[] = $request->suara_calon_3;
+                $suara_tidak_sah = $request->suara_tidak_sah;
+                $suara_sisa = $request->suara_sisa;
+
+                $dataToInsert = [
+                    [
+                        'saksi_id' => $valid->id,
+                        'calon_presiden_id' => $calon_1->id,
+                        'suara_sah' => $suara_calon[0],
+                        'suara_tidak_sah' => 0,
+                        'suara_sisa' => 0,
+                    ],
+                    [
+                        'saksi_id' => $valid->id,
+                        'calon_presiden_id' => $calon_3->id,
+                        'suara_sah' => $suara_calon[1],
+                        'suara_tidak_sah' => 0,
+                        'suara_sisa' => 0,
+                    ],
+                    [
+                        'saksi_id' => $valid->id,
+                        'calon_presiden_id' => $calon_2->id,
+                        'suara_sah' => $suara_calon[2],
+                        'suara_tidak_sah' => 0,
+                        'suara_sisa' => 0,
+                    ]
+                ];
+
+                Suara::insert($dataToInsert);
+                SuaraMasuk::create([
+                    'saksi_id' => $valid->id,
+                    'suara_sah' => array_sum($suara_calon),
+                    'suara_sisa' => $suara_sisa,
+                    'suara_tidak_sah' => $suara_tidak_sah
+                ]);
+
+                $response['response_code'] = "00";
+                $response['response_msg'] = "Berhasil menyimpan suara";
+                $response['message'] = 'success';
+            } catch (\Throwable $th) {
+                $response['response_code'] = "99";
+                $response['response_msg'] = $th->getMessage();
+                $response['message'] = [];
+            }
+
+            return response()->json($response);
+        });
     });
-    Route::prefix('admin')->group(function(){
-        Route::get('/get_kelurahan/{id}', function($id){
-            $kelurahan = Kelurahan::where('kecamatan_id',$id)->get();
+    Route::prefix('admin')->group(function () {
+        Route::get('/get_kelurahan/{id}', function ($id) {
+            $kelurahan = Kelurahan::where('kecamatan_id', $id)->get();
             return response()->json($kelurahan);
         });
     });

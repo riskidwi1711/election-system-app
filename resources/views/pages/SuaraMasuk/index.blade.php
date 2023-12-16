@@ -6,11 +6,11 @@
     <div class="card-body px-4 py-3">
         <div class="row align-items-center">
             <div class="col-9">
-                <h4 class="fw-semibold mb-8">List Tabulasi Suara</h4>
+                <h4 class="fw-semibold mb-8">List Tabulasi Suara Masuk</h4>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a class="text-muted " href="index.html">Dashboard</a></li>
-                        <li class="breadcrumb-item" aria-current="page">Data Tabulasi Suara</li>
+                        <li class="breadcrumb-item" aria-current="page">Data Tabulasi Suara Masuk</li>
                     </ol>
                 </nav>
             </div>
@@ -49,8 +49,9 @@
                                     <th>Nama Saksi</th>
                                     <th>TPS</th>
                                     <th>Kelurahan</th>
-                                    <th>Calon</th>
-                                    <th>Suara</th>
+                                    <th>Suara Sah</th>
+                                    <th>Suara Tidak Sah</th>
+                                    <th>Suara Sisa</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -59,9 +60,10 @@
                                     <td>{{$item->saksi->nama}}</td>
                                     <td>TPS {{$item->saksi->tps}}</td>
                                     <td>{{$item->saksi->kelurahan->nama}}</td>
-                                    <td>{{$item->calonPresiden->nama_calon_presiden}}-{{$item->calonPresiden->nama_wakil_presiden}}
+                                    <td>{{$item->suara_sah}}
                                     </td>
-                                    <td>{{$item->suara_sah}}</td>
+                                    <td>{{$item->suara_tidak_sah}}</td>
+                                    <td>{{$item->suara_sisa}}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -70,8 +72,9 @@
                                     <th>Nama Saksi</th>
                                     <th>TPS</th>
                                     <th>Kelurahan</th>
-                                    <th>Calon</th>
                                     <th>Suara Sah</th>
+                                    <th>Suara Tidak Sah</th>
+                                    <th>Suara Sisa</th>
                                 </tr>
                             </tfoot>
                         </table>

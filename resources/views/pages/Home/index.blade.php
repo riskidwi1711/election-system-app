@@ -163,28 +163,21 @@
                             <tr class="text-muted fw-semibold">
                                 <th scope="col" class="ps-0">Nama Pasangan Calon</th>
                                 <th scope="col">Suara Sah</th>
-                                <th scope="col">Suara Tidak Sah</th>
-                                <th scope="col">Suara Sisa</th>
                             </tr>
                         </thead>
                         <tbody class="border-top">
-                            @foreach ($chart_data as $item)
+                            @foreach ($table_data as $item)
                             <tr>
                                 <td class="ps-0">
                                     <div class="d-flex align-items-center">
                                         <div>
-                                            <h6 class="fw-semibold mb-1">{{$item['name']}}</h6>
+                                            <h6 class="fw-semibold mb-1">{{$item->nama_calon_presiden}}</h6>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
-                                    <p class="mb-0 fs-3">{{$item['data'][0]}} suara</p>
+                                    <p class="mb-0 fs-3">{{$item->total_suara_sah}} suara</p>
                                 </td>
-                                <td>
-                                    <p class="mb-0 fs-3">{{$item['data'][1]}} suara</p>
-                                </td>
-                                <td>
-                                    <p class="mb-0 fs-3">{{$item['data'][2]}} suara</p>
                                 </td>
                             </tr>
                             @endforeach
@@ -202,7 +195,7 @@
     var jsonString = {!!json_encode($chart_data)!!};
     console.log(jsonString)
     var chart = {
-        series: jsonString,
+        series: [jsonString],
         chart: {
             toolbar: {
                 show: false,
@@ -211,7 +204,7 @@
             fontFamily: "Plus Jakarta Sans', sans-serif",
             foreColor: "#adb0bb",
             height: 320,
-            stacked: true,
+            stacked: false,
         },
         colors: ["var(--bs-primary)", "var(--bs-secondary)", "var(--bs-success)"],
         plotOptions: {
@@ -250,11 +243,7 @@
             axisBorder: {
                 show: false,
             },
-            categories: [
-                "suara sah total",
-                "suara tidak sah total",
-                "suara sisa total",
-            ],
+            categories: {!!json_encode($calon_names)!!},
         },
         yaxis: {
             tickAmount: 4,
@@ -270,7 +259,7 @@
     // pie
     var breakup = {
         color: "#adb5bd",
-        series: {!!json_encode($pie_data)!!},
+        series: {!!json_encode($chart_data['data'])!!},
         labels: {!!json_encode($calon_names)!!},
         chart: {
             width: 180,

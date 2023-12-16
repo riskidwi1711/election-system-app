@@ -7,6 +7,7 @@ use App\Http\Controllers\Dashboard\HasilSuaraController;
 use App\Http\Controllers\Dashboard\KecamatanController;
 use App\Http\Controllers\Dashboard\KeluarahanController;
 use App\Http\Controllers\Dashboard\SaksiController;
+use App\Http\Controllers\Dashboard\SuaraMasukController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -58,6 +59,11 @@ Route::prefix('/dashboard')->middleware(['auth'])->group(function () {
     Route::prefix('hasil_suara')->group(function () {
         Route::controller(HasilSuaraController::class)->group(function () {
             Route::get('/', 'index')->name('suara');
+        });
+    });
+    Route::prefix('suara_masuk')->group(function () {
+        Route::controller(SuaraMasukController::class)->group(function () {
+            Route::get('/', 'index')->name('suara_masuk');
         });
     });
     Route::prefix('kecamatan')->group(function () {
