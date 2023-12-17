@@ -65,7 +65,7 @@ class HasilSuaraController extends Controller
 
         $data = [
             'model_data' => $this->model->with('saksi', 'calonPresiden')->orderBy('created_at', 'desc')->get(),
-            'formattedKey' => $formattedKey['key'],
+            'formattedKey' => $formattedKey,
             'formattedOutput' => $formattedOutput
         ];
 
