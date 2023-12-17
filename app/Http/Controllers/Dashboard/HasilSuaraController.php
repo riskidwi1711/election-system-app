@@ -57,9 +57,12 @@ class HasilSuaraController extends Controller
         foreach ($formattedOutput as $k => $data) {
 
             foreach ($data as $key => $val) {
-                $formattedKey['key'][] = $key;
+                $formattedKey[] = $key;
             }
         }
+
+        $formattedKey = array_unique($formattedKey);
+
         $data = [
             'model_data' => $this->model->with('saksi', 'calonPresiden')->orderBy('created_at', 'desc')->get(),
             'formattedKey' => $formattedKey['key'],
