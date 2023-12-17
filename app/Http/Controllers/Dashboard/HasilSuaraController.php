@@ -57,12 +57,12 @@ class HasilSuaraController extends Controller
         foreach ($formattedOutput as $k => $data) {
 
             foreach ($data as $key => $val) {
-                $formattedKey[] = $key;
+                $formattedKey['key'][] = $key;
             }
         }
         $data = [
             'model_data' => $this->model->with('saksi', 'calonPresiden')->orderBy('created_at', 'desc')->get(),
-            'formattedKey' => $formattedKey,
+            'formattedKey' => $formattedKey['key'],
             'formattedOutput' => $formattedOutput
         ];
 
