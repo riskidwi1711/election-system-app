@@ -46,32 +46,26 @@
                         <table id="zero_config" class="table border table-striped table-bordered text-nowrap">
                             <thead>
                                 <tr>
-                                    <th>Nama Saksi</th>
-                                    <th>TPS</th>
-                                    <th>Kelurahan</th>
-                                    <th>Calon</th>
-                                    <th>Suara</th>
+                                    @foreach ($formattedKey as $item)
+                                    <th class="text-capitalize">{{$item}}</th>
+                                    @endforeach
+
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($model_data as $item)
+                                @foreach ($formattedOutput as $items)
                                 <tr>
-                                    <td>{{$item->saksi->nama}}</td>
-                                    <td>TPS {{$item->saksi->tps}}</td>
-                                    <td>{{$item->saksi->kelurahan->nama}}</td>
-                                    <td>{{$item->calonPresiden->nama_calon_presiden}}-{{$item->calonPresiden->nama_wakil_presiden}}
-                                    </td>
-                                    <td>{{$item->suara_sah}}</td>
+                                    @foreach ($items as $item)
+                                    <td>{{$item}}</td>
+                                    @endforeach
                                 </tr>
                                 @endforeach
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>Nama Saksi</th>
-                                    <th>TPS</th>
-                                    <th>Kelurahan</th>
-                                    <th>Calon</th>
-                                    <th>Suara Sah</th>
+                                    @foreach ($formattedKey as $item)
+                                    <th class="text-capitalize">{{$item}}</th>
+                                    @endforeach
                                 </tr>
                             </tfoot>
                         </table>

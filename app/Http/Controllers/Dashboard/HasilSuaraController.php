@@ -21,10 +21,50 @@ class HasilSuaraController extends Controller
 
     public function index()
     {
+
+
+        $suaraData = Suara::selectRaw('saksi_id, calon_presiden_id,calon_presiden.nama_calon_presiden,calon_presiden.nama_wakil_presiden,saksi.tps,saksi.nama,kelurahan.nama as kelurahan,kecamatan.nama as kecamatan, SUM(suara_sah) as total_suara_sah')
+            ->join('saksi', 'suara.saksi_id', '=', 'saksi.id')
+            ->join('calon_presiden', 'suara.calon_presiden_id', '=', 'calon_presiden.id')
+            ->join('kecamatan', 'saksi.kecamatan_id', '=', 'kecamatan.id')
+            ->join('kelurahan', 'saksi.kelurahan_id', '=', 'kelurahan.id')
+            ->groupBy('saksi_id', 'calon_presiden_id')
+            ->get();
+
+        $formattedOutput = [];
+        $formattedKey = [];
+
+        foreach ($suaraData as $item) {
+            $saksiId = $item->saksi_id;
+            $nama_calon = $item->nama_calon_presiden;
+            $nama_wakil = $item->nama_wakil_presiden;
+            $nama_saksi = $item->nama;
+            $totalSuaraSah = $item->total_suara_sah;
+            $kelurahan = $item->kelurahan;
+            $kecamatan = $item->kecamatan;
+            $tps = $item->tps;
+
+            // if (!isset($formattedOutput[$saksiId])) {
+            //     $formattedOutput[$nama_saksi] = [];
+            // }
+            $formattedOutput[$nama_saksi]['saksi'] = $nama_saksi;
+            $formattedOutput[$nama_saksi]['kelurahan'] = $kelurahan;
+            $formattedOutput[$nama_saksi]['kecamatan'] = $kecamatan;
+            $formattedOutput[$nama_saksi]['tps'] = 'TPS '.$tps;
+            $formattedOutput[$nama_saksi][$nama_calon . '-' . $nama_wakil] = $totalSuaraSah;
+        }
+
+        foreach ($formattedOutput as $k => $data) {
+
+            foreach ($data as $key => $val) {
+                $formattedKey[] = $key;
+            }
+        }
         $data = [
-            'model_data' => $this->model->with('saksi', 'calonPresiden')->orderBy('created_at', 'desc')->get()
+            'model_data' => $this->model->with('saksi', 'calonPresiden')->orderBy('created_at', 'desc')->get(),
+            'formattedKey' => $formattedKey,
+            'formattedOutput' => $formattedOutput
         ];
-        
 
         return view('pages.' . $this->route_prefix . '.index', $data);
     }

@@ -146,13 +146,15 @@ Route::prefix('v1')->group(function () {
                     ]
                 ];
 
-                Suara::insert($dataToInsert);
-                SuaraMasuk::create([
-                    'saksi_id' => $valid->id,
+                foreach ($dataToInsert as $data) {
+                    Suara::updateOrCreate(['saksi_id' => $data['saksi_id'], 'calon_presiden_id' => $data['calon_presiden_id']], $data);
+                }
+
+                SuaraMasuk::updateOrCreate(['saksi_id' => $valid->id], [
                     'suara_sah' => array_sum($suara_calon),
                     'suara_sisa' => $suara_sisa,
                     'suara_tidak_sah' => $suara_tidak_sah,
-                    'foto' => $request->foto
+                    'photo_path' => $request->foto
                 ]);
 
                 $response['response_code'] = "00";

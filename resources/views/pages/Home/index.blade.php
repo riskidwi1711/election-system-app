@@ -41,7 +41,7 @@
                         <div class="row align-items-center">
                             <div class="col-8">
                                 <h5 class="card-title mb-9 fw-semibold">Total Perolehan Suara</h5>
-                                <h4 class="fw-semibold mb-3">{{$count_total_suara}} Suara</h4>
+                                <h4 class="fw-semibold mb-3">{{$count_suara_sah}} Suara</h4>
 
                                 <div class="d-flex align-items-center">
                                     @foreach ($calon_names as $key => $item)

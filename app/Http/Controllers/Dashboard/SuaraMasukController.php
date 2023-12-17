@@ -53,7 +53,18 @@ class SuaraMasukController extends Controller
                 'suara_sisa' => 'required'
             ]);
 
-            $suara = $this->model->create($request->all());
+            $suara = $this->model->updateOrCreate(
+                [
+                    'presiden_id' => $request->presiden_id,
+                    'saksi_id' => $request->saksi_id,
+                ],
+                [
+                    'suara_sah' => $request->suara_sah,
+                    'suara_tidak_sah' => $request->suara_tidak_sah,
+                    'suara_sisa' => $request->suara_sisa,
+                    // Add other fields as needed
+                ]
+            );
 
             $response = [
                 "response_code" => "00",

@@ -48,10 +48,12 @@
                                 <tr>
                                     <th>Nama Saksi</th>
                                     <th>TPS</th>
+                                    <th>Kecamatan</th>
                                     <th>Kelurahan</th>
                                     <th>Suara Sah</th>
                                     <th>Suara Tidak Sah</th>
                                     <th>Suara Sisa</th>
+                                    <th>Foto C1</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -59,11 +61,14 @@
                                 <tr>
                                     <td>{{$item->saksi->nama}}</td>
                                     <td>TPS {{$item->saksi->tps}}</td>
+                                    <td>{{$item->saksi->kecamatan->nama}}</td>
                                     <td>{{$item->saksi->kelurahan->nama}}</td>
                                     <td>{{$item->suara_sah}}
                                     </td>
                                     <td>{{$item->suara_tidak_sah}}</td>
                                     <td>{{$item->suara_sisa}}</td>
+                                    <td><a class="btn btn-primary" href="{{asset('uploads/c1/'.$item->photo_path)}}"
+                                            target="__blank"><i class="ti ti-download me-2"></i>Unduh Foto C1</a></td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -71,10 +76,12 @@
                                 <tr>
                                     <th>Nama Saksi</th>
                                     <th>TPS</th>
+                                    <th>Kecamatan</th>
                                     <th>Kelurahan</th>
                                     <th>Suara Sah</th>
                                     <th>Suara Tidak Sah</th>
                                     <th>Suara Sisa</th>
+                                    <th>Foto C1</th>
                                 </tr>
                             </tfoot>
                         </table>
