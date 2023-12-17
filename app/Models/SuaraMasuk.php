@@ -9,7 +9,7 @@ class SuaraMasuk extends Model
 {
     use HasFactory;
     protected $table = 'suara_masuk';
-    protected $fillable = ['saksi_id', 'suara_sah', 'suara_tidak_sah', 'suara_sisa'];
+    protected $fillable = ['saksi_id', 'suara_sah', 'suara_tidak_sah', 'suara_sisa', 'foto'];
 
     public function saksi(){
         return $this->belongsTo(Saksi::class);

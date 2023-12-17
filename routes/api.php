@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Dashboard\HasilSuaraController;
 use App\Models\CalonPresiden;
+use App\Models\FileUpload;
 use App\Models\Kelurahan;
 use App\Models\Saksi;
 use App\Models\Suara;
@@ -9,6 +10,8 @@ use App\Models\SuaraMasuk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\Rules\Can;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 
 /*
 |--------------------------------------------------------------------------
@@ -148,13 +151,60 @@ Route::prefix('v1')->group(function () {
                     'saksi_id' => $valid->id,
                     'suara_sah' => array_sum($suara_calon),
                     'suara_sisa' => $suara_sisa,
-                    'suara_tidak_sah' => $suara_tidak_sah
+                    'suara_tidak_sah' => $suara_tidak_sah,
+                    'foto' => $request->foto
                 ]);
 
                 $response['response_code'] = "00";
                 $response['response_msg'] = "Berhasil menyimpan suara";
                 $response['message'] = 'success';
             } catch (\Throwable $th) {
+                $response['response_code'] = "99";
+                $response['response_msg'] = $th->getMessage();
+                $response['message'] = [];
+            }
+
+            return response()->json($response);
+        });
+        Route::post('upload_foto', function (Request $request) {
+            $response = [
+                "response_code" => "00",
+                "response_msg" => "success"
+            ];
+            try {
+                $username =  $request->username;
+                // $valid = Saksi::where('id_telegram', $username)->first();
+                // if (!$valid) {
+                //     throw new Exception('Saksi tidak terdaftar.');
+                // }
+
+                $validatedData = $request->validate([
+                    'url' => 'required|url'
+                ]);
+                $url = $validatedData['url'];
+                $extension = pathinfo(parse_url($url)['path'], PATHINFO_EXTENSION);
+
+                $client = new Client();
+                $resp = $client->get($url);
+                $contentType = $resp->getHeader('content-type')[0];
+                $fileName = time() . '.' . $extension;
+
+                FileUpload::create([
+                    'file_name' => $fileName,
+                    'file_path' => 'uploads/c1/'
+                ]);
+
+                $path = public_path('uploads/c1/' . $fileName);
+                file_put_contents($path, $resp->getBody());
+
+                $response['response_code'] = "00";
+                $response['response_msg'] = "Berhasil upload foto";
+                $response['message'] = $fileName;
+            } catch (RequestException $e) {
+                $response['response_code'] = "99";
+                $response['response_msg'] = 'Gagal mengunduh file dari URL yang diberikan';
+                $response['message'] = [];
+            } catch (Exception $th) {
                 $response['response_code'] = "99";
                 $response['response_msg'] = $th->getMessage();
                 $response['message'] = [];
